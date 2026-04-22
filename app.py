@@ -234,8 +234,9 @@ if st.session_state.get('model_trained', False):
     
     # Vertical line at forecast start
     forecast_start = df_daily['ds'].iloc[-1]
+    forecast_start_str = forecast_start.strftime('%Y-%m-%d')
     fig.add_vline(
-        x=forecast_start,
+        x=forecast_start_str,
         line_width=2,
         line_dash="dash",
         line_color="#64748b",

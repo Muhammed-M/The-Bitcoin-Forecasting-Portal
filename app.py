@@ -18,6 +18,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+st.set_option('server.enableXsrfProtection', False)
 
 # ----------------------------- CUSTOM CSS (Light Modern Theme) -----------------------------
 st.markdown("""

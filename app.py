@@ -200,7 +200,8 @@ df_test = df_daily.iloc[split_idx:].copy()
 
 @st.cache_data(show_spinner=False)
 def get_ml_features(df_json):
-    df = pd.read_json(df_json)
+    from io import StringIO
+    df = pd.read_json(StringIO(df_json))
     df['ds'] = pd.to_datetime(df['ds'])
     df_feat = create_ml_features(df.set_index('ds'))
     return df_feat

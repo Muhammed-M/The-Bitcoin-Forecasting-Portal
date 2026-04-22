@@ -1,10 +1,2 @@
 [server]
 enableXsrfProtection = false
-
-[theme]
-base="light"
-primaryColor="#0f172a"
-backgroundColor="#ffffff"
-secondaryBackgroundColor="#f8fafc"
-textColor="#1e293b"
-font="sans serif"

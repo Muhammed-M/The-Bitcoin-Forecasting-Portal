@@ -1,0 +1,119 @@
+/* style.css - Clean Light Theme for Bitcoin Forecaster */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Main background */
+.main {
+    background-color: #f8fafc;
+}
+
+.stApp {
+    background-color: #f8fafc;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+    color: #0f172a !important;
+}
+
+p, li, div:not([class*="metric"]) {
+    color: #1e293b !important;
+}
+
+/* Metric cards */
+div[data-testid="metric-container"] {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+div[data-testid="metric-container"] label {
+    color: #64748b !important;
+    font-weight: 500;
+}
+
+div[data-testid="metric-container"] div[data-testid="stMetricValue"] {
+    color: #0f172a !important;
+    font-weight: 700;
+}
+
+/* Buttons */
+.stButton > button {
+    background-color: #0f172a;
+    color: white !important;
+    border-radius: 12px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    border: none;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.stButton > button:hover {
+    background-color: #1e293b;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Dataframes */
+.stDataFrame {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Expander */
+.streamlit-expanderHeader {
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    color: #0f172a !important;
+}
+
+/* File uploader */
+.stFileUploader > div > div {
+    border-radius: 12px;
+    border: 2px dashed #cbd5e1;
+    background-color: #ffffff;
+}
+
+/* Slider */
+.stSlider > div > div > div {
+    background-color: #0f172a;
+}
+
+/* Select boxes */
+.stSelectbox > div > div {
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+/* Info/Warning/Success boxes */
+.stAlert {
+    background-color: #ffffff;
+    border-radius: 12px;
+    border-left: 4px solid #3b82f6;
+}
+
+/* Divider */
+hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 1.5rem 0;
+}
+
+/* Ensure all text is visible */
+label, .stMarkdown, .stText, .stCaption {
+    color: #1e293b !important;
+}

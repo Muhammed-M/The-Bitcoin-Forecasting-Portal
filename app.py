@@ -23,6 +23,13 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+load_css("style.css")
+
+
 # ----------------------------- SESSION STATE INITIALIZATION -----------------------------
 if 'data_loaded' not in st.session_state:
     st.session_state.data_loaded = False

@@ -3,3 +3,6 @@ Dataset_for_test
 *.pdf
 *.ipynb
 *.csv
+
+__pycache__
+.vscode

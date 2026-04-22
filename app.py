@@ -296,7 +296,7 @@ if st.session_state.get('model_trained', False):
     ))
 
     # Forecast start marker
-    forecast_start = df_daily['ds'].iloc[-1]
+    forecast_start = str(df_daily['ds'].iloc[-1].date())
     fig.add_vline(
         x=forecast_start,
         line_width=2, line_dash="dash", line_color="#64748b",

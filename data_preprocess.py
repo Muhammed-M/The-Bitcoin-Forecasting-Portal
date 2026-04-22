@@ -50,7 +50,7 @@ def load_and_prepare_btc_data(uploaded_file, price_col='Close'):
         
         df_daily = df_daily.reindex(full_range)
         # Forward fill missing days (crypto trades 24/7, so ffill is safe)
-        df_daily = df_daily.fillna(method='ffill')
+        df_daily = df_daily.ffill()
         # Drop any leading NaN
         df_daily = df_daily.dropna()
         

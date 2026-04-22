@@ -6,3 +6,6 @@ Dataset_for_test
 
 __pycache__
 .vscode
+
+*.csv
+data_convert

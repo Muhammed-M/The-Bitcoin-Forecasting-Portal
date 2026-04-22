@@ -295,16 +295,21 @@ if st.session_state.get('model_trained', False):
         showlegend=True,
     ))
 
-    # Forecast start marker
-    forecast_start = str(df_daily['ds'].iloc[-1].date())
-    fig.add_vline(
-        x=forecast_start,
-        line_width=2, line_dash="dash", line_color="#64748b",
-        annotation_text="Forecast Start",
-        annotation_position="top left",
-        annotation_font_size=12,
-        annotation_font_color="#64748b",
-    )
+    # Forecast start marker (manual trace — avoids Plotly add_vline date bug)
+    forecast_start = str(df_daily["ds"].iloc[-1].date())
+    y_min = float(df_daily["y"].min())
+    y_max = float(df_daily["y"].max())
+    fig.add_trace(go.Scatter(
+        x=[forecast_start, forecast_start],
+        y=[y_min, y_max],
+        mode="lines+text",
+        line=dict(color="#64748b", width=2, dash="dash"),
+        text=["", "Forecast Start"],
+        textposition="top right",
+        textfont=dict(size=12, color="#64748b"),
+        hoverinfo="skip",
+        showlegend=False,
+    ))
 
     fig.update_layout(
         xaxis_title="Date",

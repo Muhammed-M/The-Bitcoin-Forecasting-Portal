@@ -1,5 +1,9 @@
 # app.py
 
+import os
+os.environ["SKLEARN_DISABLE_ARROW"] = "1"
+
+
 import streamlit as st
 import pandas as pd
 import numpy as np

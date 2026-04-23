@@ -114,7 +114,7 @@ class HybridMLForecaster:
         features['return_7'] = (prices[-1] / prices[-8] - 1) if n >= 8 else 0
 
         if n >= 7:
-            rets = np.diff(prices[-7:]) / prices[-8:-1]
+            rets = np.diff(prices[-7:]) / prices[-7:-1]
             features['volatility_7'] = np.std(rets)
         else:
             features['volatility_7'] = 0

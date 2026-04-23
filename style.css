@@ -1,30 +1,25 @@
 /* ============================================================
    BTC FORECASTER — Dark Terminal Theme
-   Typefaces: Syne (headings) + DM Mono (numbers/labels)
-   Palette: Deep charcoal bg · Amber gold accent · Slate surfaces
+   Typefaces: Plus Jakarta Sans (headings) + DM Mono (numbers)
+   Palette: Deep charcoal · Amber gold · Slate surfaces
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-/* ── Global reset ── */
+/* ── Global ── */
 html, body, [class*="css"] {
-    font-family: 'Syne', sans-serif;
-    letter-spacing: 0.01em;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* ── App background ── */
 .stApp {
     background-color: #0d0e12;
     background-image:
-        radial-gradient(ellipse 80% 40% at 50% -10%, rgba(251,191,36,0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 30% at 90% 80%, rgba(251,191,36,0.03) 0%, transparent 60%);
+        radial-gradient(ellipse 80% 40% at 50% -10%, rgba(251,191,36,0.05) 0%, transparent 70%);
 }
 
-.main {
-    background-color: transparent;
-}
+.main { background-color: transparent; }
 
-/* ── Main content padding ── */
 .main .block-container {
     padding-top: 2.5rem;
     padding-bottom: 3rem;
@@ -33,123 +28,202 @@ html, body, [class*="css"] {
 
 /* ── Sidebar ── */
 section[data-testid="stSidebar"] {
-    background-color: #13141a;
-    border-right: 1px solid rgba(251,191,36,0.12);
+    background-color: #111218;
+    border-right: 1px solid rgba(251,191,36,0.1);
 }
 
 section[data-testid="stSidebar"] > div {
     padding-top: 1.5rem;
 }
 
-/* Sidebar logo area */
 section[data-testid="stSidebar"] img {
-    filter: drop-shadow(0 0 12px rgba(251,191,36,0.35));
+    filter: drop-shadow(0 0 10px rgba(251,191,36,0.3));
 }
 
-/* ── Typography ── */
-h1 {
-    font-family: 'Syne', sans-serif !important;
-    font-weight: 800 !important;
-    font-size: 2.4rem !important;
-    color: #f5f5f0 !important;
-    letter-spacing: -0.02em !important;
-    line-height: 1.1 !important;
-}
-
-h2, h3 {
-    font-family: 'Syne', sans-serif !important;
+/* ── Sidebar brand ── */
+.sb-brand {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 1.15rem !important;
     font-weight: 700 !important;
-    color: #e8e8e0 !important;
-    letter-spacing: -0.01em !important;
-}
-
-h4, h5, h6 {
-    font-family: 'Syne', sans-serif !important;
-    font-weight: 600 !important;
-    color: #c8c8be !important;
-}
-
-p, li {
-    color: #9a9a8e !important;
-    line-height: 1.7 !important;
-}
-
-/* ── Sidebar title ── */
-section[data-testid="stSidebar"] h1 {
-    font-size: 1.3rem !important;
     color: #fbbf24 !important;
+    margin: 6px 0 0 0 !important;
+    letter-spacing: 0.01em !important;
+}
+
+/* ── Step labels ── */
+.sb-step-label {
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.7rem !important;
+    font-weight: 500 !important;
+    color: rgba(251,191,36,0.65) !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    margin: 0 0 10px 0 !important;
+}
+
+/* ── Hint text ── */
+.sb-hint {
+    font-size: 0.8rem !important;
+    color: #4a4a3e !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    margin: 4px 0 !important;
+}
+
+/* ── Retrain warning ── */
+.sb-warn {
+    font-size: 0.78rem !important;
+    color: #f59e0b !important;
+    font-family: 'DM Mono', monospace !important;
+    margin: 4px 0 8px 0 !important;
+    background: rgba(245,158,11,0.08) !important;
+    padding: 6px 10px !important;
+    border-radius: 6px !important;
+    border-left: 2px solid #f59e0b !important;
+}
+
+/* ── Trained info badge ── */
+.sb-trained-info {
+    font-size: 0.75rem !important;
+    color: #10b981 !important;
+    font-family: 'DM Mono', monospace !important;
+    margin: 4px 0 8px 0 !important;
+    background: rgba(16,185,129,0.08) !important;
+    padding: 5px 10px !important;
+    border-radius: 6px !important;
+    border-left: 2px solid #10b981 !important;
+}
+
+/* ── Main title ── */
+.main-title {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 2.1rem !important;
+    color: #f0f0ea !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.2 !important;
+    margin: 0 0 8px 0 !important;
+}
+
+.main-title::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #fbbf24, transparent);
+    margin-top: 10px;
+    border-radius: 2px;
+}
+
+/* ── Main subtitle ── */
+.main-subtitle {
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.82rem !important;
+    color: #5a5a4e !important;
+    margin: 0 0 1.8rem 0 !important;
     letter-spacing: 0.02em !important;
 }
 
-/* ── Sidebar labels ── */
-section[data-testid="stSidebar"] label,
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] div {
-    color: #9a9a8e !important;
-    font-size: 0.85rem;
+/* ── Streamlit default headers (fallback) ── */
+h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 700 !important;
+    color: #f0f0ea !important;
+    letter-spacing: -0.01em !important;
 }
 
-section[data-testid="stSidebar"] .stSubheader,
-section[data-testid="stSidebar"] h3 {
-    color: #fbbf24 !important;
-    font-size: 0.75rem !important;
+h2, h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-weight: 600 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
+    color: #d8d8d0 !important;
+}
+
+h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 500 !important;
+    color: #b0b0a0 !important;
+}
+
+p, li { color: #8a8a7e !important; line-height: 1.7 !important; }
+
+/* ── Sidebar labels ── */
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] p {
+    color: #8a8a7e !important;
+    font-size: 0.83rem !important;
 }
 
 /* ── Divider ── */
 hr {
     border: 0 !important;
     height: 1px !important;
-    background: linear-gradient(90deg, transparent, rgba(251,191,36,0.25), transparent) !important;
-    margin: 1.5rem 0 !important;
+    background: linear-gradient(90deg, transparent, rgba(251,191,36,0.2), transparent) !important;
+    margin: 1.2rem 0 !important;
 }
 
-/* ── Generate Forecast Button ── */
-.stButton > button {
+/* ── Train button (primary) ── */
+.stButton > button[kind="primary"] {
     background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
     color: #0d0e12 !important;
     border: none !important;
     border-radius: 8px !important;
-    padding: 0.75rem 1.5rem !important;
-    font-family: 'Syne', sans-serif !important;
+    padding: 0.65rem 1.2rem !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 0.9rem !important;
-    letter-spacing: 0.04em !important;
-    text-transform: uppercase !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.02em !important;
     width: 100% !important;
-    transition: all 0.25s ease !important;
-    box-shadow: 0 4px 20px rgba(251,191,36,0.25) !important;
-    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 16px rgba(251,191,36,0.2) !important;
 }
 
-.stButton > button:hover {
+.stButton > button[kind="primary"]:hover {
     transform: translateY(-1px) !important;
-    box-shadow: 0 8px 30px rgba(251,191,36,0.4) !important;
-    filter: brightness(1.08) !important;
+    box-shadow: 0 6px 24px rgba(251,191,36,0.35) !important;
+    filter: brightness(1.06) !important;
 }
 
-.stButton > button:active {
-    transform: translateY(0) !important;
-}
-
-.stButton > button:disabled {
-    background: linear-gradient(135deg, #3a3520 0%, #2a2615 100%) !important;
-    color: #5a5a4e !important;
+.stButton > button[kind="primary"]:disabled {
+    background: #1e1e26 !important;
+    color: #3a3a30 !important;
     box-shadow: none !important;
-    cursor: not-allowed !important;
+}
+
+/* ── Predict button (secondary) ── */
+.stButton > button[kind="secondary"] {
+    background: transparent !important;
+    color: #fbbf24 !important;
+    border: 1px solid rgba(251,191,36,0.4) !important;
+    border-radius: 8px !important;
+    padding: 0.65rem 1.2rem !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    width: 100% !important;
+    transition: all 0.2s ease !important;
+}
+
+.stButton > button[kind="secondary"]:hover {
+    background: rgba(251,191,36,0.07) !important;
+    border-color: #fbbf24 !important;
+    box-shadow: 0 0 16px rgba(251,191,36,0.12) !important;
+}
+
+.stButton > button[kind="secondary"]:disabled {
+    background: transparent !important;
+    color: #2a2a22 !important;
+    border-color: #2a2a22 !important;
+    box-shadow: none !important;
 }
 
 /* ── Metric cards ── */
 div[data-testid="metric-container"] {
-    background: linear-gradient(145deg, #1a1b22 0%, #141519 100%) !important;
-    border: 1px solid rgba(251,191,36,0.15) !important;
-    border-radius: 12px !important;
-    padding: 1.4rem !important;
+    background: #141519 !important;
+    border: 1px solid rgba(251,191,36,0.12) !important;
+    border-radius: 10px !important;
+    padding: 1.2rem !important;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s ease;
 }
 
 div[data-testid="metric-container"]::before {
@@ -158,19 +232,17 @@ div[data-testid="metric-container"]::before {
     top: 0; left: 0; right: 0;
     height: 2px;
     background: linear-gradient(90deg, transparent, #fbbf24, transparent);
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
 div[data-testid="metric-container"]:hover {
-    border-color: rgba(251,191,36,0.35) !important;
-    box-shadow: 0 0 24px rgba(251,191,36,0.08) !important;
+    border-color: rgba(251,191,36,0.28) !important;
 }
 
 div[data-testid="metric-container"] label {
     font-family: 'DM Mono', monospace !important;
-    color: #6a6a5e !important;
-    font-size: 0.72rem !important;
-    font-weight: 500 !important;
+    color: #5a5a4e !important;
+    font-size: 0.7rem !important;
     letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
 }
@@ -179,269 +251,142 @@ div[data-testid="stMetricValue"] {
     font-family: 'DM Mono', monospace !important;
     color: #fbbf24 !important;
     font-weight: 500 !important;
-    font-size: 1.6rem !important;
-}
-
-div[data-testid="stMetricDelta"] {
-    font-family: 'DM Mono', monospace !important;
-    font-size: 0.8rem !important;
+    font-size: 1.5rem !important;
 }
 
 /* ── Selectbox ── */
 .stSelectbox > div > div {
     background-color: #1a1b22 !important;
-    border: 1px solid rgba(251,191,36,0.2) !important;
-    border-radius: 8px !important;
-    color: #e8e8e0 !important;
-    font-family: 'Syne', sans-serif !important;
+    border: 1px solid rgba(251,191,36,0.18) !important;
+    border-radius: 7px !important;
+    color: #d8d8d0 !important;
     transition: border-color 0.2s ease !important;
 }
 
 .stSelectbox > div > div:hover {
-    border-color: rgba(251,191,36,0.45) !important;
+    border-color: rgba(251,191,36,0.4) !important;
 }
 
 .stSelectbox > div > div > div {
-    color: #e8e8e0 !important;
+    color: #d8d8d0 !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 0.85rem !important;
 }
 
 /* ── Slider ── */
-.stSlider > div > div > div {
-    background-color: #fbbf24 !important;
-}
-
-.stSlider [data-testid="stThumbValue"],
-.stSlider [data-testid="stTickBarMin"],
-.stSlider [data-testid="stTickBarMax"] {
-    font-family: 'DM Mono', monospace !important;
-    color: #9a9a8e !important;
-    font-size: 0.75rem !important;
-}
-
 div[data-baseweb="slider"] div[role="slider"] {
     background-color: #fbbf24 !important;
     border: 2px solid #0d0e12 !important;
-    box-shadow: 0 0 10px rgba(251,191,36,0.5) !important;
+    box-shadow: 0 0 8px rgba(251,191,36,0.4) !important;
 }
 
 div[data-baseweb="slider"] [data-testid="stSliderTrackFill"] {
     background-color: #fbbf24 !important;
 }
 
-/* ── Select slider (confidence interval) ── */
-.stSelectSlider > div {
-    font-family: 'DM Mono', monospace !important;
-}
-
 /* ── File uploader ── */
 .stFileUploader > div > div {
-    background-color: #1a1b22 !important;
-    border: 1.5px dashed rgba(251,191,36,0.25) !important;
-    border-radius: 10px !important;
+    background-color: #151619 !important;
+    border: 1.5px dashed rgba(251,191,36,0.22) !important;
+    border-radius: 9px !important;
     transition: border-color 0.2s ease, background-color 0.2s ease !important;
 }
 
 .stFileUploader > div > div:hover {
-    background-color: #1e1f28 !important;
-    border-color: rgba(251,191,36,0.5) !important;
-}
-
-.stFileUploader label {
-    color: #9a9a8e !important;
-    font-size: 0.85rem !important;
+    background-color: #1a1b22 !important;
+    border-color: rgba(251,191,36,0.45) !important;
 }
 
 /* ── Checkbox ── */
 .stCheckbox label {
-    color: #9a9a8e !important;
-    font-size: 0.85rem !important;
-    font-family: 'Syne', sans-serif !important;
+    color: #8a8a7e !important;
+    font-size: 0.83rem !important;
 }
 
-label[data-baseweb="checkbox"] span {
-    border-color: rgba(251,191,36,0.3) !important;
-    background-color: transparent !important;
-}
-
-input[type="checkbox"]:checked + span {
-    background-color: #fbbf24 !important;
-    border-color: #fbbf24 !important;
-}
-
-/* ── Alert / info boxes ── */
+/* ── Alert boxes ── */
 .stAlert {
-    background-color: #1a1b22 !important;
-    border: 1px solid rgba(251,191,36,0.15) !important;
+    background-color: #151619 !important;
+    border: 1px solid rgba(251,191,36,0.12) !important;
     border-left: 3px solid #fbbf24 !important;
-    border-radius: 8px !important;
-    color: #9a9a8e !important;
+    border-radius: 7px !important;
 }
 
-div[data-testid="stNotification"] {
-    background-color: #1a1b22 !important;
-    border-left: 3px solid #fbbf24 !important;
-}
-
-/* ── Success / Error boxes ── */
-div[data-baseweb="notification"][kind="positive"],
-.element-container .stSuccess {
-    background-color: rgba(16, 185, 129, 0.08) !important;
-    border-left: 3px solid #10b981 !important;
-    border-radius: 8px !important;
-}
-
-div[data-baseweb="notification"][kind="negative"],
-.element-container .stError {
-    background-color: rgba(239, 68, 68, 0.08) !important;
-    border-left: 3px solid #ef4444 !important;
-    border-radius: 8px !important;
+/* ── Success / Error ── */
+div[data-baseweb="notification"] {
+    border-radius: 7px !important;
 }
 
 /* ── Expander ── */
 .streamlit-expanderHeader {
-    background-color: #1a1b22 !important;
-    border: 1px solid rgba(251,191,36,0.15) !important;
-    border-radius: 8px !important;
-    color: #c8c8be !important;
-    font-family: 'Syne', sans-serif !important;
-    font-size: 0.85rem !important;
+    background-color: #151619 !important;
+    border: 1px solid rgba(251,191,36,0.12) !important;
+    border-radius: 7px !important;
+    color: #b0b0a0 !important;
+    font-size: 0.83rem !important;
     font-weight: 600 !important;
 }
 
 .streamlit-expanderContent {
-    background-color: #141519 !important;
-    border: 1px solid rgba(251,191,36,0.1) !important;
+    background-color: #111218 !important;
+    border: 1px solid rgba(251,191,36,0.08) !important;
     border-top: none !important;
-    border-radius: 0 0 8px 8px !important;
+    border-radius: 0 0 7px 7px !important;
 }
 
 /* ── Dataframe ── */
 .stDataFrame {
-    border: 1px solid rgba(251,191,36,0.15) !important;
-    border-radius: 10px !important;
+    border: 1px solid rgba(251,191,36,0.12) !important;
+    border-radius: 8px !important;
     overflow: hidden !important;
-}
-
-.stDataFrame table {
-    background-color: #141519 !important;
 }
 
 .stDataFrame th {
     background-color: #1a1b22 !important;
     color: #fbbf24 !important;
     font-family: 'DM Mono', monospace !important;
-    font-size: 0.75rem !important;
+    font-size: 0.72rem !important;
     letter-spacing: 0.08em !important;
     text-transform: uppercase !important;
-    border-bottom: 1px solid rgba(251,191,36,0.15) !important;
 }
 
 .stDataFrame td {
-    color: #c8c8be !important;
+    color: #b0b0a0 !important;
     font-family: 'DM Mono', monospace !important;
-    font-size: 0.82rem !important;
-    border-color: rgba(255,255,255,0.04) !important;
+    font-size: 0.8rem !important;
 }
 
 /* ── Download button ── */
 .stDownloadButton > button {
-    background-color: transparent !important;
-    border: 1px solid rgba(251,191,36,0.35) !important;
+    background: transparent !important;
+    border: 1px solid rgba(251,191,36,0.3) !important;
     color: #fbbf24 !important;
-    border-radius: 8px !important;
-    font-family: 'Syne', sans-serif !important;
+    border-radius: 7px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-size: 0.82rem !important;
     font-weight: 600 !important;
-    letter-spacing: 0.03em !important;
-    padding: 0.5rem 1rem !important;
     transition: all 0.2s ease !important;
 }
 
 .stDownloadButton > button:hover {
-    background-color: rgba(251,191,36,0.08) !important;
+    background: rgba(251,191,36,0.07) !important;
     border-color: #fbbf24 !important;
-    box-shadow: 0 0 16px rgba(251,191,36,0.15) !important;
 }
 
 /* ── Spinner ── */
-.stSpinner > div {
-    border-top-color: #fbbf24 !important;
-}
+.stSpinner > div { border-top-color: #fbbf24 !important; }
 
-/* ── Caption / footer ── */
+/* ── Caption ── */
 .stCaption, [data-testid="stCaptionContainer"] {
     font-family: 'DM Mono', monospace !important;
-    color: #4a4a3e !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.04em !important;
+    color: #3a3a30 !important;
+    font-size: 0.72rem !important;
 }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: #0d0e12;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(251,191,36,0.2);
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(251,191,36,0.4);
-}
-
-/* ── Plotly chart container ── */
-.js-plotly-plot {
-    border-radius: 12px !important;
-    overflow: hidden !important;
-}
-
-/* ── Main title accent ── */
-.stApp h1::after {
-    content: '';
-    display: block;
-    width: 48px;
-    height: 3px;
-    background: linear-gradient(90deg, #fbbf24, transparent);
-    margin-top: 10px;
-    border-radius: 2px;
-}
-
-/* ── Subheader accent ── */
-.stApp h3 {
-    padding-bottom: 0.4rem;
-    border-bottom: 1px solid rgba(251,191,36,0.1);
-    display: inline-block;
-}
-
-/* ── Section markdown text ── */
-.stMarkdown p {
-    color: #7a7a6e !important;
-    font-size: 0.9rem !important;
-}
-
-/* ── Progress bar ── */
-.stProgress > div > div {
-    background-color: #fbbf24 !important;
-}
-
-/* ── Tooltip ── */
-[data-baseweb="tooltip"] {
-    background-color: #1e1f28 !important;
-    border: 1px solid rgba(251,191,36,0.2) !important;
-    border-radius: 6px !important;
-    color: #e8e8e0 !important;
-    font-family: 'DM Mono', monospace !important;
-    font-size: 0.75rem !important;
-}
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #0d0e12; }
+::-webkit-scrollbar-thumb { background: rgba(251,191,36,0.18); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(251,191,36,0.35); }
 
 /* ── Help icon ── */
-.stTooltipIcon svg {
-    color: rgba(251,191,36,0.4) !important;
-    fill: rgba(251,191,36,0.4) !important;
-}
+.stTooltipIcon svg { color: rgba(251,191,36,0.35) !important; }

@@ -1,126 +1,135 @@
 # ₿ Bitcoin Price Forecasting Portal
 
-An interactive Streamlit web application for analyzing and forecasting Bitcoin (BTC) price trends using multiple time-series models.
+> An interactive web app for analyzing and forecasting Bitcoin prices — built with Streamlit, Prophet, and XGBoost.
+
+**🔗 Live App → [Open in Streamlit](https://the-bitcoin-forecasting-app-ypahyzgmh6vz7vkedshtjm.streamlit.app/#bitcoin-price-forecast)**
 
 ---
 
-## Features
+## What It Does
 
-- Upload any Kaggle-style Bitcoin historical CSV (minute-level or daily)
-- Choose which OHLC price column to forecast (`Open`, `High`, `Low`, `Close`)
-- Three forecasting models: **Prophet**, **ARIMA**, and **Hybrid ML** (ElasticNet + XGBoost)
-- Adjustable forecast horizon (7–90 days) and confidence interval (80%, 90%, 95%, 99%)
-- Backtesting with MAE and RMSE metrics in USD
-- Interactive Plotly chart with historical data, forecast line, and uncertainty bands
+Upload a Bitcoin historical CSV, train a forecasting model, and generate an interactive price prediction chart — all in your browser with no code required.
+
+- Supports any Kaggle-style BTC CSV (minute-level or daily)
+- Two forecasting models: **Prophet** and **Hybrid ML** (ElasticNet + XGBoost)
+- Adjustable forecast horizon (7–90 days) and confidence intervals (80% – 99%)
+- Backtest metrics: MAE and RMSE in USD
 - Downloadable forecast CSV
 
 ---
 
-## Setup
+## How to Use It
 
-### 1. Clone or unzip the project
+The sidebar walks you through three steps:
 
-```bash
-cd btc-forecaster
-```
+**① Data** — Upload your CSV and select a price column (`Open`, `High`, `Low`, or `Close`)
 
-### 2. Create a virtual environment (recommended)
+**② Train Model** — Pick an algorithm and confidence interval, then click **⚡ Train Model**
 
-```bash
-python -m venv venv
-source venv/bin/activate      # macOS/Linux
-venv\Scripts\activate         # Windows
-```
+**③ Forecast** — Set how many days ahead to predict, then click **📈 Generate Forecast**
 
-### 3. Install dependencies
+> If you change the algorithm or confidence after training, the app will warn you to retrain before forecasting again.
 
-```bash
-pip install -r requirements.txt
-```
-
-> **Note:** Prophet requires `pystan`. On some systems you may need to install it separately:
-> ```bash
-> pip install pystan==2.19.1.1
-> pip install prophet
-> ```
-
-### 4. Run the app
-
-```bash
-streamlit run app.py
-```
-
-The app will open at `http://localhost:8501`.
+> Hybrid ML (ElasticNet + XGBoost) may take a few minutes to train then you can generate the forecast 
 
 ---
 
 ## Dataset
 
-This app was tested with the **Bitcoin Historical Data** dataset from Kaggle:
+Tested with the **Bitcoin Historical Data** dataset from Kaggle:
 
-🔗 [https://www.kaggle.com/datasets/mczielinski/bitcoin-historical-data](https://www.kaggle.com/datasets/mczielinski/bitcoin-historical-data)
+🔗 [kaggle.com/datasets/mczielinski/bitcoin-historical-data](https://www.kaggle.com/datasets/mczielinski/bitcoin-historical-data)
 
-Download `btcusd_1-min_data.csv` and upload it directly through the app's sidebar.
+Also works with daily-level CSVs like:
 
-The app also supports daily-level CSVs such as:
-
-🔗 [https://www.kaggle.com/datasets/prasoonkottarathil/btcinusd](https://www.kaggle.com/datasets/prasoonkottarathil/btcinusd)
+🔗 [kaggle.com/datasets/prasoonkottarathil/btcinusd](https://www.kaggle.com/datasets/prasoonkottarathil/btcinusd)
 
 ### Expected CSV Format
 
-Your CSV must contain:
-- A date/time column named one of: `Date`, `Timestamp`, `Open time`, `time`, `datetime`
-- At least one price column: `Open`, `High`, `Low`, `Close`
+Your file needs at minimum:
 
-Example:
+| Column type | Accepted names |
+|---|---|
+| Date / Time | `Date`, `Open time`, `Timestamp`, `datetime`, `time` |
+| Price | `Open`, `High`, `Low`, `Close` |
+
 ```
-Open time,Open,High,Low,Close
-2021-01-01,29000,29500,28800,29300
-2021-01-02,29300,30100,29100,30000
+Open time,Open,High,Low,Close,Volume
+2021-01-01,29000,29500,28800,29300,1200
+2021-01-02,29300,30100,29100,30000,1350
 ```
+
+Missing trading days are forward-filled automatically.
 
 ---
 
-## Project Structure
+## Models
+
+### Prophet
+Facebook's Prophet decomposes the price series into trend, weekly seasonality, and yearly seasonality. It uses **multiplicative** seasonality mode — appropriate for Bitcoin because price swings scale with the price level (a 10% move at $100k is very different in dollar terms than at $10k). The `changepoint_prior_scale` is set conservatively at `0.05` to avoid overfitting sharp but temporary spikes.
+
+### Hybrid ML (ElasticNet + XGBoost)
+A two-stage ensemble:
+1. **ElasticNetCV** captures the long-term linear trend using calendar features, lag prices, and rolling statistics. Cross-validated regularisation prevents it from memorising noise.
+2. **XGBoost** is trained on the residuals — the non-linear patterns the linear model misses, including volatility clusters and momentum effects.
+
+Forecasting is done **recursively**: each predicted price feeds back into the feature window for the next step. Confidence intervals are derived from the standard deviation of in-sample residuals.
+
+---
+
+## Local Setup
+
+```bash
+# 1. Clone or unzip the project
+
+# 2. Create a virtual environment
+python -m venv venv
+source venv/bin/activate        # macOS / Linux
+venv\Scripts\activate           # Windows
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Run the app
+streamlit run app.py
+```
+
+The app opens at `http://localhost:8501`.
+
+> **Note on Prophet:** On some systems, Prophet requires `pystan` to be installed first:
+> ```bash
+> pip install pystan==2.19.1.1
+> pip install prophet
+> ```
+
+---
+
+## Project Files
 
 ```
 btc-forecaster/
-├── app.py               # Main Streamlit application
-├── data_preprocess.py   # Data loading, resampling, and feature engineering
-├── models.py            # Prophet, ARIMA, and Hybrid ML model classes
-├── style.css            # Custom UI styling
+├── app.py               # Streamlit application — UI, session state, train/predict flow
+├── data_preprocess.py   # CSV loading, date parsing, resampling, feature engineering
+├── models.py            # ProphetForecaster and HybridMLForecaster classes
+├── style.css            # Dark terminal theme — Plus Jakarta Sans + DM Mono
 ├── requirements.txt     # Python dependencies
 └── README.md            # This file
 ```
 
 ---
 
-## Model Explanations
-
-### Prophet
-Facebook's Prophet is designed for time series with strong seasonal patterns and trend shifts — both very common in crypto markets. It uses a decomposable model (trend + seasonality + holidays) and handles missing data and outliers well. The `changepoint_prior_scale` is set conservatively (0.05) to avoid overfitting Bitcoin's sharp but temporary price spikes. Seasonality is set to **multiplicative** mode because Bitcoin's price swings are proportional to its level (e.g., a 10% move at $60,000 is far larger in absolute terms than at $6,000).
-
-### ARIMA(5,1,0)
-ARIMA (AutoRegressive Integrated Moving Average) is a classical statistical approach. The `d=1` (first-order differencing) makes the series stationary by modelling **returns** rather than raw prices — essential for financial data which is non-stationary. The `p=5` autoregressive terms capture short-term momentum (up to 5 days of autocorrelation in returns). ARIMA is best suited for short-horizon forecasts and provides analytically derived confidence intervals from its residual variance.
-
-### Hybrid ML (ElasticNet + XGBoost)
-A two-stage ensemble approach:
-1. **ElasticNetCV** (L1 + L2 regularisation) captures the long-term linear trend using calendar and lag features. Cross-validated regularisation prevents overfitting.
-2. **XGBoost** is trained on the residuals — the non-linear patterns that the linear model misses. It picks up on volatility clusters, momentum, and mean-reversion effects.
-
-Multi-step forecasting is done **recursively**: each predicted price feeds back into the rolling feature window for the next step, mimicking how future lags would behave. Confidence intervals are estimated using the standard deviation of in-sample residuals, scaled by a z-score corresponding to the chosen confidence level.
-
----
-
 ## Dependencies
 
-| Package | Purpose |
-|---|---|
-| `streamlit` | Web UI framework |
-| `plotly` | Interactive charts |
-| `prophet` | Prophet forecasting model |
-| `statsmodels` | ARIMA model |
-| `scikit-learn` | ElasticNetCV, preprocessing, metrics |
-| `xgboost` | Gradient boosting residual model |
-| `pandas` / `numpy` | Data manipulation |
-| `pyarrow` | Arrow-based data serialisation (required by pandas/streamlit) |
+| Package | Version | Purpose |
+|---|---|---|
+| `streamlit` | ≥1.28 | Web UI framework |
+| `plotly` | ≥5.14 | Interactive charts |
+| `prophet` | ≥1.1 | Prophet model |
+| `scikit-learn` | ≥1.2 | ElasticNetCV, StandardScaler, metrics |
+| `xgboost` | ≥1.7 | Gradient boosting residual model |
+| `statsmodels` | ≥0.14 | Time series utilities |
+| `pandas` | ≥1.5 | Data manipulation |
+| `numpy` | ≥1.23 | Numerical computing |
+| `pyarrow` | ≥12.0 | Arrow serialisation for pandas/streamlit |
+
+---

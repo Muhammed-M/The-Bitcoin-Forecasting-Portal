@@ -124,10 +124,3 @@ Multi-step forecasting is done **recursively**: each predicted price feeds back 
 | `xgboost` | Gradient boosting residual model |
 | `pandas` / `numpy` | Data manipulation |
 | `pyarrow` | Arrow-based data serialisation (required by pandas/streamlit) |
-
----
-
-## Submission
-
-- **Deadline:** 24 April 2026  
-- **Stack:** Streamlit · Plotly · Prophet · ARIMA · scikit-learn · XGBoost · Kaggle CSV

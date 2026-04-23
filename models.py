@@ -7,7 +7,6 @@ from sklearn.linear_model import ElasticNetCV
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import StandardScaler
 import xgboost as xgb
-from statsmodels.tsa.arima.model import ARIMA
 import warnings
 import logging
 from collections import deque
@@ -62,64 +61,6 @@ class ProphetForecaster:
         self.metrics = {'MAE': mae, 'RMSE': rmse}
         return self.metrics
 
-
-# ─────────────────────────── ARIMA ───────────────────────────
-class ARIMAForecaster:
-    """
-    ARIMA(5,1,0) model for Bitcoin price forecasting.
-    Uses first-order differencing (d=1) to handle the non-stationarity typical
-    of crypto prices. AR terms (p=5) capture short-term autocorrelation in returns.
-    Confidence intervals are derived analytically from the model's residual variance.
-    """
-
-    def __init__(self, order=(5, 1, 0)):
-        self.order = order
-        self.model = None
-        self.result = None
-        self.history = None
-        self.metrics = {}
-
-    def fit(self, df):
-        """df: DataFrame with columns ['ds', 'y']"""
-        self.history = df['y'].values.copy()
-        with warnings.catch_warnings():
-            warnings.simplefilter('ignore')
-            self.result = ARIMA(self.history, order=self.order).fit()
-
-    def predict(self, horizon, confidence=0.95):
-        if self.result is None:
-            raise ValueError("Model not fitted. Call fit() first.")
-
-        alpha = 1 - confidence
-        forecast_obj = self.result.get_forecast(steps=horizon)
-        yhat = forecast_obj.predicted_mean
-        ci = forecast_obj.conf_int(alpha=alpha)
-
-        last_date = pd.Timestamp.today().normalize()
-        # If we stored history as a series with a date index, use it
-        # Otherwise fall back to today
-        dates = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=horizon, freq='D')
-
-        return pd.DataFrame({
-            'ds': dates,
-            'yhat': yhat.values,
-            'yhat_lower': ci.iloc[:, 0].values,
-            'yhat_upper': ci.iloc[:, 1].values,
-        })
-
-    def evaluate(self, df_train, df_test, confidence=0.95):
-        self.fit(df_train)
-        n_test = len(df_test)
-        alpha = 1 - confidence
-        with warnings.catch_warnings():
-            warnings.simplefilter('ignore')
-            forecast_obj = self.result.get_forecast(steps=n_test)
-        y_pred = forecast_obj.predicted_mean.values
-        y_true = df_test['y'].values
-        mae = mean_absolute_error(y_true, y_pred)
-        rmse = np.sqrt(mean_squared_error(y_true, y_pred))
-        self.metrics = {'MAE': mae, 'RMSE': rmse}
-        return self.metrics
 
 
 # ─────────────────────────── Hybrid ML ───────────────────────────

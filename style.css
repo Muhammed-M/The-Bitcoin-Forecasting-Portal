@@ -1,119 +1,447 @@
-/* style.css - Clean Light Theme for Bitcoin Forecaster */
+/* ============================================================
+   BTC FORECASTER — Dark Terminal Theme
+   Typefaces: Syne (headings) + DM Mono (numbers/labels)
+   Palette: Deep charcoal bg · Amber gold accent · Slate surfaces
+   ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap');
 
+/* ── Global reset ── */
 html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.01em;
 }
 
-/* Main background */
-.main {
-    background-color: #f8fafc;
-}
-
+/* ── App background ── */
 .stApp {
-    background-color: #f8fafc;
+    background-color: #0d0e12;
+    background-image:
+        radial-gradient(ellipse 80% 40% at 50% -10%, rgba(251,191,36,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 30% at 90% 80%, rgba(251,191,36,0.03) 0%, transparent 60%);
 }
 
-/* Sidebar */
+.main {
+    background-color: transparent;
+}
+
+/* ── Main content padding ── */
+.main .block-container {
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
+    max-width: 1100px;
+}
+
+/* ── Sidebar ── */
 section[data-testid="stSidebar"] {
-    background-color: #ffffff;
-    border-right: 1px solid #e2e8f0;
+    background-color: #13141a;
+    border-right: 1px solid rgba(251,191,36,0.12);
 }
 
-/* Headers */
-h1, h2, h3, h4, h5, h6 {
-    color: #0f172a !important;
+section[data-testid="stSidebar"] > div {
+    padding-top: 1.5rem;
 }
 
-p, li, div:not([class*="metric"]) {
-    color: #1e293b !important;
+/* Sidebar logo area */
+section[data-testid="stSidebar"] img {
+    filter: drop-shadow(0 0 12px rgba(251,191,36,0.35));
 }
 
-/* Metric cards */
-div[data-testid="metric-container"] {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 1.2rem;
-    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+/* ── Typography ── */
+h1 {
+    font-family: 'Syne', sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 2.4rem !important;
+    color: #f5f5f0 !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.1 !important;
 }
 
-div[data-testid="metric-container"] label {
-    color: #64748b !important;
-    font-weight: 500;
+h2, h3 {
+    font-family: 'Syne', sans-serif !important;
+    font-weight: 700 !important;
+    color: #e8e8e0 !important;
+    letter-spacing: -0.01em !important;
 }
 
-div[data-testid="metric-container"] div[data-testid="stMetricValue"] {
-    color: #0f172a !important;
-    font-weight: 700;
+h4, h5, h6 {
+    font-family: 'Syne', sans-serif !important;
+    font-weight: 600 !important;
+    color: #c8c8be !important;
 }
 
-/* Buttons */
+p, li {
+    color: #9a9a8e !important;
+    line-height: 1.7 !important;
+}
+
+/* ── Sidebar title ── */
+section[data-testid="stSidebar"] h1 {
+    font-size: 1.3rem !important;
+    color: #fbbf24 !important;
+    letter-spacing: 0.02em !important;
+}
+
+/* ── Sidebar labels ── */
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] div {
+    color: #9a9a8e !important;
+    font-size: 0.85rem;
+}
+
+section[data-testid="stSidebar"] .stSubheader,
+section[data-testid="stSidebar"] h3 {
+    color: #fbbf24 !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+}
+
+/* ── Divider ── */
+hr {
+    border: 0 !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, rgba(251,191,36,0.25), transparent) !important;
+    margin: 1.5rem 0 !important;
+}
+
+/* ── Generate Forecast Button ── */
 .stButton > button {
-    background-color: #0f172a;
-    color: white !important;
-    border-radius: 12px;
-    padding: 0.6rem 1.2rem;
-    font-weight: 600;
-    border: none;
-    transition: all 0.2s ease;
-    width: 100%;
+    background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+    color: #0d0e12 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 1.5rem !important;
+    font-family: 'Syne', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    width: 100% !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 4px 20px rgba(251,191,36,0.25) !important;
+    cursor: pointer !important;
 }
 
 .stButton > button:hover {
-    background-color: #1e293b;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-1px) !important;
+    box-shadow: 0 8px 30px rgba(251,191,36,0.4) !important;
+    filter: brightness(1.08) !important;
 }
 
-/* Dataframes */
-.stDataFrame {
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
+.stButton > button:active {
+    transform: translateY(0) !important;
 }
 
-/* Expander */
-.streamlit-expanderHeader {
-    background-color: #ffffff;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    color: #0f172a !important;
+.stButton > button:disabled {
+    background: linear-gradient(135deg, #3a3520 0%, #2a2615 100%) !important;
+    color: #5a5a4e !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
 }
 
-/* File uploader */
-.stFileUploader > div > div {
-    border-radius: 12px;
-    border: 2px dashed #cbd5e1;
-    background-color: #ffffff;
+/* ── Metric cards ── */
+div[data-testid="metric-container"] {
+    background: linear-gradient(145deg, #1a1b22 0%, #141519 100%) !important;
+    border: 1px solid rgba(251,191,36,0.15) !important;
+    border-radius: 12px !important;
+    padding: 1.4rem !important;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Slider */
-.stSlider > div > div > div {
-    background-color: #0f172a;
+div[data-testid="metric-container"]::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #fbbf24, transparent);
+    opacity: 0.6;
 }
 
-/* Select boxes */
+div[data-testid="metric-container"]:hover {
+    border-color: rgba(251,191,36,0.35) !important;
+    box-shadow: 0 0 24px rgba(251,191,36,0.08) !important;
+}
+
+div[data-testid="metric-container"] label {
+    font-family: 'DM Mono', monospace !important;
+    color: #6a6a5e !important;
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+}
+
+div[data-testid="stMetricValue"] {
+    font-family: 'DM Mono', monospace !important;
+    color: #fbbf24 !important;
+    font-weight: 500 !important;
+    font-size: 1.6rem !important;
+}
+
+div[data-testid="stMetricDelta"] {
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.8rem !important;
+}
+
+/* ── Selectbox ── */
 .stSelectbox > div > div {
-    border-radius: 8px;
-    background-color: #ffffff;
+    background-color: #1a1b22 !important;
+    border: 1px solid rgba(251,191,36,0.2) !important;
+    border-radius: 8px !important;
+    color: #e8e8e0 !important;
+    font-family: 'Syne', sans-serif !important;
+    transition: border-color 0.2s ease !important;
 }
 
-/* Info/Warning/Success boxes */
+.stSelectbox > div > div:hover {
+    border-color: rgba(251,191,36,0.45) !important;
+}
+
+.stSelectbox > div > div > div {
+    color: #e8e8e0 !important;
+}
+
+/* ── Slider ── */
+.stSlider > div > div > div {
+    background-color: #fbbf24 !important;
+}
+
+.stSlider [data-testid="stThumbValue"],
+.stSlider [data-testid="stTickBarMin"],
+.stSlider [data-testid="stTickBarMax"] {
+    font-family: 'DM Mono', monospace !important;
+    color: #9a9a8e !important;
+    font-size: 0.75rem !important;
+}
+
+div[data-baseweb="slider"] div[role="slider"] {
+    background-color: #fbbf24 !important;
+    border: 2px solid #0d0e12 !important;
+    box-shadow: 0 0 10px rgba(251,191,36,0.5) !important;
+}
+
+div[data-baseweb="slider"] [data-testid="stSliderTrackFill"] {
+    background-color: #fbbf24 !important;
+}
+
+/* ── Select slider (confidence interval) ── */
+.stSelectSlider > div {
+    font-family: 'DM Mono', monospace !important;
+}
+
+/* ── File uploader ── */
+.stFileUploader > div > div {
+    background-color: #1a1b22 !important;
+    border: 1.5px dashed rgba(251,191,36,0.25) !important;
+    border-radius: 10px !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+.stFileUploader > div > div:hover {
+    background-color: #1e1f28 !important;
+    border-color: rgba(251,191,36,0.5) !important;
+}
+
+.stFileUploader label {
+    color: #9a9a8e !important;
+    font-size: 0.85rem !important;
+}
+
+/* ── Checkbox ── */
+.stCheckbox label {
+    color: #9a9a8e !important;
+    font-size: 0.85rem !important;
+    font-family: 'Syne', sans-serif !important;
+}
+
+label[data-baseweb="checkbox"] span {
+    border-color: rgba(251,191,36,0.3) !important;
+    background-color: transparent !important;
+}
+
+input[type="checkbox"]:checked + span {
+    background-color: #fbbf24 !important;
+    border-color: #fbbf24 !important;
+}
+
+/* ── Alert / info boxes ── */
 .stAlert {
-    background-color: #ffffff;
-    border-radius: 12px;
-    border-left: 4px solid #3b82f6;
+    background-color: #1a1b22 !important;
+    border: 1px solid rgba(251,191,36,0.15) !important;
+    border-left: 3px solid #fbbf24 !important;
+    border-radius: 8px !important;
+    color: #9a9a8e !important;
 }
 
-/* Divider */
-hr {
-    border: 0;
-    height: 1px;
-    background: #e2e8f0;
-    margin: 1.5rem 0;
+div[data-testid="stNotification"] {
+    background-color: #1a1b22 !important;
+    border-left: 3px solid #fbbf24 !important;
 }
 
-/* Ensure all text is visible */
-label, .stMarkdown, .stText, .stCaption {
-    color: #1e293b !important;
+/* ── Success / Error boxes ── */
+div[data-baseweb="notification"][kind="positive"],
+.element-container .stSuccess {
+    background-color: rgba(16, 185, 129, 0.08) !important;
+    border-left: 3px solid #10b981 !important;
+    border-radius: 8px !important;
+}
+
+div[data-baseweb="notification"][kind="negative"],
+.element-container .stError {
+    background-color: rgba(239, 68, 68, 0.08) !important;
+    border-left: 3px solid #ef4444 !important;
+    border-radius: 8px !important;
+}
+
+/* ── Expander ── */
+.streamlit-expanderHeader {
+    background-color: #1a1b22 !important;
+    border: 1px solid rgba(251,191,36,0.15) !important;
+    border-radius: 8px !important;
+    color: #c8c8be !important;
+    font-family: 'Syne', sans-serif !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+}
+
+.streamlit-expanderContent {
+    background-color: #141519 !important;
+    border: 1px solid rgba(251,191,36,0.1) !important;
+    border-top: none !important;
+    border-radius: 0 0 8px 8px !important;
+}
+
+/* ── Dataframe ── */
+.stDataFrame {
+    border: 1px solid rgba(251,191,36,0.15) !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+}
+
+.stDataFrame table {
+    background-color: #141519 !important;
+}
+
+.stDataFrame th {
+    background-color: #1a1b22 !important;
+    color: #fbbf24 !important;
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    border-bottom: 1px solid rgba(251,191,36,0.15) !important;
+}
+
+.stDataFrame td {
+    color: #c8c8be !important;
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.82rem !important;
+    border-color: rgba(255,255,255,0.04) !important;
+}
+
+/* ── Download button ── */
+.stDownloadButton > button {
+    background-color: transparent !important;
+    border: 1px solid rgba(251,191,36,0.35) !important;
+    color: #fbbf24 !important;
+    border-radius: 8px !important;
+    font-family: 'Syne', sans-serif !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.stDownloadButton > button:hover {
+    background-color: rgba(251,191,36,0.08) !important;
+    border-color: #fbbf24 !important;
+    box-shadow: 0 0 16px rgba(251,191,36,0.15) !important;
+}
+
+/* ── Spinner ── */
+.stSpinner > div {
+    border-top-color: #fbbf24 !important;
+}
+
+/* ── Caption / footer ── */
+.stCaption, [data-testid="stCaptionContainer"] {
+    font-family: 'DM Mono', monospace !important;
+    color: #4a4a3e !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.04em !important;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0d0e12;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(251,191,36,0.2);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(251,191,36,0.4);
+}
+
+/* ── Plotly chart container ── */
+.js-plotly-plot {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+/* ── Main title accent ── */
+.stApp h1::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, #fbbf24, transparent);
+    margin-top: 10px;
+    border-radius: 2px;
+}
+
+/* ── Subheader accent ── */
+.stApp h3 {
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(251,191,36,0.1);
+    display: inline-block;
+}
+
+/* ── Section markdown text ── */
+.stMarkdown p {
+    color: #7a7a6e !important;
+    font-size: 0.9rem !important;
+}
+
+/* ── Progress bar ── */
+.stProgress > div > div {
+    background-color: #fbbf24 !important;
+}
+
+/* ── Tooltip ── */
+[data-baseweb="tooltip"] {
+    background-color: #1e1f28 !important;
+    border: 1px solid rgba(251,191,36,0.2) !important;
+    border-radius: 6px !important;
+    color: #e8e8e0 !important;
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.75rem !important;
+}
+
+/* ── Help icon ── */
+.stTooltipIcon svg {
+    color: rgba(251,191,36,0.4) !important;
+    fill: rgba(251,191,36,0.4) !important;
 }

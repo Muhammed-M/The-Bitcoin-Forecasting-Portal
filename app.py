@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 from data_preprocess import load_and_prepare_btc_data, create_ml_features, detect_available_price_columns
-from models import ProphetForecaster, ARIMAForecaster, HybridMLForecaster
+from models import ProphetForecaster, HybridMLForecaster
 
 # ─────────────────────────── PAGE CONFIG ───────────────────────────
 st.set_page_config(
@@ -135,11 +135,10 @@ Open time,Open,High,Low,Close
 
     model_choice = st.selectbox(
         "Model",
-        ["Prophet", "ARIMA", "Hybrid ML (ElasticNet + XGBoost)"],
+        ["Prophet", "Hybrid ML (ElasticNet + XGBoost)"],
         disabled=not data_ready,
         help=(
             "**Prophet** – robust to seasonality and trend shifts.\n"
-            "**ARIMA** – classic statistical model, good for short-term patterns.\n"
             "**Hybrid ML** – combines linear trend (ElasticNet) with gradient boosting (XGBoost)."
         ),
     )
@@ -200,8 +199,7 @@ df_test = df_daily.iloc[split_idx:].copy()
 
 @st.cache_data(show_spinner=False)
 def get_ml_features(df_json):
-    from io import StringIO
-    df = pd.read_json(StringIO(df_json))
+    df = pd.read_json(df_json)
     df['ds'] = pd.to_datetime(df['ds'])
     df_feat = create_ml_features(df.set_index('ds'))
     return df_feat
@@ -224,18 +222,6 @@ if generate_btn:
                 forecaster.fit(df_daily, confidence)
                 forecast = forecaster.predict(horizon, confidence)
 
-            elif model_choice == "ARIMA":
-                forecaster = ARIMAForecaster(order=(5, 1, 0))
-                metrics = forecaster.evaluate(df_train, df_test, confidence)
-                # Re-fit on full data
-                forecaster.fit(df_daily)
-                # Override dates to continue from last known date
-                raw = forecaster.predict(horizon, confidence)
-                last_date = df_daily['ds'].iloc[-1]
-                raw['ds'] = pd.date_range(
-                    start=last_date + pd.Timedelta(days=1), periods=horizon, freq='D'
-                )
-                forecast = raw
 
             else:  # Hybrid ML
                 forecaster = HybridMLForecaster()
@@ -262,7 +248,7 @@ if st.session_state.get('model_trained', False):
     fig.add_trace(go.Scatter(
         x=df_daily['ds'], y=df_daily['y'],
         mode='lines', name='Historical Price',
-        line=dict(color='#3b82f6', width=2),
+        line=dict(color='#3b82f6', width=1.8),
         hovertemplate='Date: %{x}<br>Price: $%{y:.2f}<extra></extra>',
     ))
 
@@ -272,7 +258,7 @@ if st.session_state.get('model_trained', False):
         fig.add_trace(go.Scatter(
             x=df_daily['ds'], y=ma7,
             mode='lines', name='7-day MA',
-            line=dict(color='#f59e0b', width=1.5, dash='dot'),
+            line=dict(color='#d97706', width=1.5, dash='dot'),
             hovertemplate='MA7: $%{y:.2f}<extra></extra>',
         ))
 
@@ -280,7 +266,7 @@ if st.session_state.get('model_trained', False):
     fig.add_trace(go.Scatter(
         x=forecast['ds'], y=forecast['yhat'],
         mode='lines', name='Forecast',
-        line=dict(color='#ef4444', width=3),
+        line=dict(color='#fbbf24', width=2.5),
         hovertemplate='Forecast: $%{y:.2f}<extra></extra>',
     ))
 
@@ -289,8 +275,8 @@ if st.session_state.get('model_trained', False):
         x=forecast['ds'].tolist() + forecast['ds'][::-1].tolist(),
         y=forecast['yhat_upper'].tolist() + forecast['yhat_lower'][::-1].tolist(),
         fill='toself',
-        fillcolor='rgba(239, 68, 68, 0.15)',
-        line=dict(color='rgba(255,255,255,0)'),
+        fillcolor='rgba(251,191,36,0.07)',
+        line=dict(color='rgba(251,191,36,0.15)'),
         hoverinfo='skip',
         name=f"{int(confidence * 100)}% Confidence",
         showlegend=True,
@@ -304,10 +290,10 @@ if st.session_state.get('model_trained', False):
         x=[forecast_start, forecast_start],
         y=[y_min, y_max],
         mode="lines+text",
-        line=dict(color="#64748b", width=2, dash="dash"),
+        line=dict(color="rgba(251,191,36,0.4)", width=1.5, dash="dash"),
         text=["", "Forecast Start"],
         textposition="top right",
-        textfont=dict(size=12, color="#64748b"),
+        textfont=dict(size=11, color="rgba(251,191,36,0.6)", family="DM Mono"),
         hoverinfo="skip",
         showlegend=False,
     ))
@@ -316,19 +302,33 @@ if st.session_state.get('model_trained', False):
         xaxis_title="Date",
         yaxis_title="Price (USD)",
         hovermode='x unified',
-        template='plotly_white',
-        height=550,
-        margin=dict(l=40, r=40, t=40, b=40),
+        template='plotly_dark',
+        height=560,
+        margin=dict(l=40, r=40, t=30, b=40),
         legend=dict(
             orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1,
-            bgcolor='rgba(255,255,255,0.8)', bordercolor='#e2e8f0', borderwidth=1,
+            bgcolor='rgba(20,21,25,0.8)', bordercolor='rgba(251,191,36,0.2)', borderwidth=1,
+            font=dict(color='#9a9a8e', size=12),
         ),
-        font=dict(family='Inter, sans-serif', color='#1e293b'),
-        paper_bgcolor='#f8fafc',
-        plot_bgcolor='#ffffff',
+        font=dict(family='DM Mono, monospace', color='#9a9a8e', size=11),
+        paper_bgcolor='#0d0e12',
+        plot_bgcolor='#0f1015',
+        hoverlabel=dict(
+            bgcolor='#1a1b22',
+            bordercolor='rgba(251,191,36,0.3)',
+            font=dict(family='DM Mono, monospace', color='#e8e8e0', size=12),
+        ),
     )
-    fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='#e2e8f0')
-    fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='#e2e8f0', tickprefix='$')
+    fig.update_xaxes(
+        showgrid=True, gridwidth=1, gridcolor='rgba(255,255,255,0.04)',
+        zeroline=False, tickfont=dict(color='#5a5a4e', size=10),
+        linecolor='rgba(255,255,255,0.06)',
+    )
+    fig.update_yaxes(
+        showgrid=True, gridwidth=1, gridcolor='rgba(255,255,255,0.04)',
+        zeroline=False, tickprefix='$', tickfont=dict(color='#5a5a4e', size=10),
+        linecolor='rgba(255,255,255,0.06)',
+    )
 
     st.plotly_chart(fig, use_container_width=True)
 
@@ -371,13 +371,16 @@ else:
     st.info("👈 Configure settings in the sidebar and click **Generate Forecast** to see predictions.")
     fig_preview = px.line(df_daily, x='ds', y='y', title='Historical Bitcoin Prices (Preview)')
     fig_preview.update_layout(
-        template='plotly_white', height=400,
-        paper_bgcolor='#f8fafc', plot_bgcolor='#ffffff',
+        template='plotly_dark', height=420,
+        paper_bgcolor='#0d0e12', plot_bgcolor='#0f1015',
+        font=dict(family='DM Mono, monospace', color='#9a9a8e', size=11),
+        hoverlabel=dict(bgcolor='#1a1b22', font=dict(color='#e8e8e0')),
+        margin=dict(l=40, r=40, t=40, b=40),
     )
-    fig_preview.update_xaxes(title='Date', gridcolor='#e2e8f0')
-    fig_preview.update_yaxes(title='Price (USD)', gridcolor='#e2e8f0', tickprefix='$')
+    fig_preview.update_xaxes(title='Date', gridcolor='rgba(255,255,255,0.04)', tickfont=dict(color='#5a5a4e'))
+    fig_preview.update_yaxes(title='Price (USD)', gridcolor='rgba(255,255,255,0.04)', tickprefix='$', tickfont=dict(color='#5a5a4e'))
     st.plotly_chart(fig_preview, use_container_width=True)
 
 # ─────────────────────────── FOOTER ───────────────────────────
 st.markdown("---")
-st.caption("Built with Streamlit · Prophet · ARIMA · XGBoost · Plotly")
+st.caption("Built with Streamlit · Prophet · XGBoost · Plotly")

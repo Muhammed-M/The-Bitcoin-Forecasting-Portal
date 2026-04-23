@@ -51,7 +51,7 @@ def load_data(file_bytes, file_name, price_col):
 
 @st.cache_data(show_spinner=False)
 def get_ml_features(df_json):
-    df = pd.read_json(StringIO(df_json))
+    df = pd.read_json(StringIO(df_json), convert_dates=['ds'])
     df['ds'] = pd.to_datetime(df['ds'])
     return create_ml_features(df.set_index('ds'))
 
@@ -281,7 +281,7 @@ if train_btn:
                 metrics = forecaster.evaluate(df_train, df_test, confidence)
                 forecaster.fit(df_daily, confidence)
             else:
-                df_features = get_ml_features(df_daily.to_json())
+                df_features = get_ml_features(df_daily.to_json(date_format='iso'))
                 train_features = df_features.iloc[:split_idx].copy()
                 test_features  = df_features.iloc[split_idx:].copy()
                 forecaster = HybridMLForecaster()
